@@ -13,6 +13,6 @@ public interface ClientService {
     Optional<ClientDto> findById(Long id);
     Optional<ClientDto> update(Long id, ClientUpdateDto dto);
 
-    //Fonction qui fait les virement
-    void virement(Long idCompteEmetteur, Long idCompteRecepteur, Double montant);
+    ///Fonction qui fait les virement
+    //void virement(Long idCompteEmetteur, Long idCompteRecepteur, Double montant);
 }

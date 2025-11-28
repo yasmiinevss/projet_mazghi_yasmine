@@ -22,7 +22,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ClientServiceImpl implements ClientService {
     private final ClientRepository clientRepo;
-    private final CompteRepository compteRepo;
     private final ConseillerRepository conseillerRepo;
     private final ClientMapper mapper;
 
@@ -45,7 +44,8 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Optional<ClientDto> findById(Long id) {
-        return clientRepo.findById(id).map(mapper::toDto);    }
+        return clientRepo.findById(id).map(mapper::toDto);
+    }
 
     @Transactional // il permet de garder ouvert le contexte de persistance pendant toute la methode update
     @Override
@@ -59,7 +59,7 @@ public class ClientServiceImpl implements ClientService {
                     // Si conseiller changed :
                     if (dto.conseillerId() != null) {
                         Conseiller c = conseillerRepo.findById(dto.conseillerId())
-                                .orElseThrow(() -> new RuntimeException("Conseiller non trouve." ));
+                                .orElseThrow(() -> new RuntimeException("Conseiller non trouve."));
 
                         existingClient.setConseiller(c);
                     }
@@ -68,9 +68,9 @@ public class ClientServiceImpl implements ClientService {
         );
     }
 
+}
 
-
-    // Fonction qui va faire le virement entre un compte emetteur et un compte recepteur
+    /*// Fonction qui va faire le virement entre un compte emetteur et un compte recepteur
     @Override
     @Transactional
     public void virement(Long idCompteEmetteur, Long idCompteRecepteur, Double montant) {
@@ -93,4 +93,4 @@ public class ClientServiceImpl implements ClientService {
         compteRepo.save(sourceCompte);
         compteRepo.save(destCompte);
     }
-}
+}*/

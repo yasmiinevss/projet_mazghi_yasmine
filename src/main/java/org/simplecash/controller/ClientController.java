@@ -44,7 +44,7 @@ public class ClientController {
 
 
     // URL =  POST /clients/virement?emetteur=1&recepteur=2&montant=50
-    @PostMapping("virement")
+   /* @PostMapping("virement")
     public ResponseEntity<String> faireVirement(
             @RequestParam Long emetteur,
             @RequestParam Long recepteur,
@@ -52,5 +52,5 @@ public class ClientController {
 
         service.virement(emetteur, recepteur, montant);
         return ResponseEntity.ok("Virement de " + montant + "€ effectue du client " + emetteur + " vers le client " + recepteur + " !");
-    }
+    }*/
 }
