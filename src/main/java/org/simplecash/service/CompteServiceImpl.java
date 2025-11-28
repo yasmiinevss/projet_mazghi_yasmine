@@ -42,9 +42,15 @@ public class CompteServiceImpl implements CompteService{
     }
 
     @Override
-    @Transactional
-    // TODO:
     public List<CompteDto> getComptesAuditDecouvert() {
         return List.of();
     }
+
+   /* @Override
+    @Transactional
+    // TODO:
+    public List<CompteDto> getComptesAuditDecouvert() {
+        return compteRepo.findAll().stream().filter(c -> c.getSolde() < 0).map(mapper::toDto).toList();
+
+    }*/
 }
