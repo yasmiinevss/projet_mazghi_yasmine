@@ -1,4 +1,4 @@
 package org.simplecash.dto;
 
-public class ClientDto {
+public record ClientDto(Long id, String nom,String prenom, String ville,String nomConseiller ) {
 }
