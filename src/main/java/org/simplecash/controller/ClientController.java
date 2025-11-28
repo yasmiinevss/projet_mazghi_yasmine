@@ -34,7 +34,7 @@ public class ClientController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PatchMapping("{id}")
+    @PutMapping("{id}")
     ResponseEntity<ClientDto> updateClient(@PathVariable long id, @RequestBody @Valid ClientUpdateDto dto) {
         return service.update(id, dto)
                 .map(ResponseEntity::ok)
@@ -43,6 +43,7 @@ public class ClientController {
 
 
 
+    // URL =  POST /clients/virement?emetteur=1&recepteur=2&montant=50
     @PostMapping("virement")
     public ResponseEntity<String> faireVirement(
             @RequestParam Long emetteur,
@@ -50,6 +51,6 @@ public class ClientController {
             @RequestParam Double montant) {
 
         service.virement(emetteur, recepteur, montant);
-        return ResponseEntity.ok("Votre virement a bien ete effectue !");
+        return ResponseEntity.ok("Virement de " + montant + "€ effectue du client " + emetteur + " vers le client " + recepteur + " !");
     }
 }

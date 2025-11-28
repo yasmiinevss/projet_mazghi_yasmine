@@ -14,5 +14,5 @@ public interface ClientService {
     Optional<ClientDto> update(Long id, ClientUpdateDto dto);
 
     //Fonction qui fait les virement
-    void virement(Long idCompteEmetteur, Long idCompteBeneficiaire, Double montant);
+    void virement(Long idCompteEmetteur, Long idCompteRecepteur, Double montant);
 }

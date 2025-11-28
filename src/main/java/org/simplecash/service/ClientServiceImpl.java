@@ -5,6 +5,7 @@ import org.simplecash.dto.ClientCreateDto;
 import org.simplecash.dto.ClientDto;
 import org.simplecash.dto.ClientUpdateDto;
 import org.simplecash.entity.Client;
+import org.simplecash.entity.Compte;
 import org.simplecash.entity.Conseiller;
 import org.simplecash.mapper.ClientMapper;
 import org.simplecash.repository.ClientRepository;
@@ -58,7 +59,7 @@ public class ClientServiceImpl implements ClientService {
                     // Si conseiller changed :
                     if (dto.conseillerId() != null) {
                         Conseiller c = conseillerRepo.findById(dto.conseillerId())
-                                .orElseThrow(() -> new RuntimeException("Conseiller non trouve " ));
+                                .orElseThrow(() -> new RuntimeException("Conseiller non trouve." ));
 
                         existingClient.setConseiller(c);
                     }
@@ -67,8 +68,29 @@ public class ClientServiceImpl implements ClientService {
         );
     }
 
-    @Override
-    public void virement(Long idCompteEmetteur, Long idCompteBeneficiaire, Double montant) {
 
+
+    // Fonction qui va faire le virement entre un compte emetteur et un compte recepteur
+    @Override
+    @Transactional
+    public void virement(Long idCompteEmetteur, Long idCompteRecepteur, Double montant) {
+
+        Compte sourceCompte = compteRepo.findById(idCompteEmetteur).orElseThrow(() -> new RuntimeException("virement : compte emetteur n'existe pas."));
+        Compte destCompte = compteRepo.findById(idCompteRecepteur).orElseThrow(() -> new RuntimeException("virement : compte recepteur n'existe pas."));
+
+        // On verifie qu'il a bien l'argent dans son compte
+        if (sourceCompte.getSolde() < montant) {
+            throw new RuntimeException("Solde insuffisant");
+        }
+
+        // On enleve l'argent du compte emetteur
+        sourceCompte.setSolde(sourceCompte.getSolde() - montant);
+
+        // On ajoute l'argent dans le compte recpteur
+        destCompte.setSolde(destCompte.getSolde() + montant);
+
+        // Don't forget to save it all
+        compteRepo.save(sourceCompte);
+        compteRepo.save(destCompte);
     }
 }
