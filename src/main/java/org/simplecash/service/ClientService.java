@@ -1,4 +1,4 @@
 package org.simplecash.service;
 
-public class ClientService {
+public interface ClientService {
 }
