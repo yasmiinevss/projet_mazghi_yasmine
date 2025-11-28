@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -23,4 +26,8 @@ public class Client {
     // Faire le lien dans la table
     @JoinColumn(name = "conseiller_id")
     private Conseiller conseiller;
+
+    // Le client peut avoir plusieurs comptes
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    private List<Compte> comptes = new ArrayList<>();
 }
